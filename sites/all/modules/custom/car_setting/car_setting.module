@@ -1,0 +1,71 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: admin
+ * Date: 6/8/16
+ * Time: 9:39 PM
+ * To change this template use File | Settings | File Templates.
+ */
+/**
+ * Implement hook_entity
+ */
+
+/**
+ * Implements hook_menu().
+ * Add menu for order
+ */
+function car_setting_menu()
+{
+  $item = array();
+  $item['manage/information'] = array(
+    'title' => t('Quản lý thông tin hệ thống'),
+    'access arguments' => array('car_setting:*:manager'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('car_setting_form'),
+    'type' => MENU_LOCAL_ACTION
+  );
+
+  return $item;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function car_setting_permission()
+{
+  return array(
+    'car_setting:*:manager' => array(
+      'title' => t('Quản lý thông tin'),
+    ),
+  );
+}
+
+/**
+ * @param $form
+ * @param $form_state
+ * @return mixed
+ */
+function car_setting_form($form, &$form_state){
+  $form['name'] = array(
+    '#type'=>'textfield',
+    '#title' => 'Tên công ty',
+    '#default_value'=> variable_get('name'),
+  );
+  $form['site_address'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Địa chỉ',
+    '#default_value'=> variable_get('site_address'),
+  );
+  $form['site_email'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Email',
+    '#default_value'=> variable_get('site_email'),
+  );
+  $form['site_phone'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Điện thoại',
+    '#default_value'=> variable_get('site_phone'),
+  );
+
+  return system_settings_form($form);
+}

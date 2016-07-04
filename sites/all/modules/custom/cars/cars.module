@@ -1,0 +1,249 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: admin
+ * Date: 6/8/16
+ * Time: 9:39 PM
+ * To change this template use File | Settings | File Templates.
+ */
+/**
+ * Implement hook_entity
+ */
+
+function cars_entity_info()
+{
+  return array(
+    'cars' => array(
+      "label" => "Cars",
+      "base table" => "cars",
+      'controller class' => 'CarsController',
+      "fieldable" => false,
+      'entity keys' => array(
+        'id' => 'id',
+      ),
+      'views controller class' => 'CarsViewsController',
+      'view modes' => array(
+        'full' => array(
+          'label' => t('Full content'),
+          'custom settings' => TRUE
+        )
+      )
+    )
+  );
+}
+
+
+/**
+ * Implements hook_menu().
+ * Add menu for order
+ */
+function cars_menu()
+{
+  $item = array();
+  $item['cars/add'] = array(
+    'title' => t('Thêm Xe'),
+    'access arguments' => array('cars:*:add'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cars_add_form', 2),
+    'file' => 'includes/cars.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+  $item['cars/edit/%cars'] = array(
+    'title' => t('Cập nhật Xe'),
+    'access arguments' => array('cars:*:edit'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cars_add_form', 2),
+    'file' => 'includes/cars.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+
+  $item['cars/delete/%cars'] = array(
+    'title' => t('Xóa Xe'),
+    'access arguments' => array('cars:*:delete'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cars_delete_form', 2),
+    'file' => 'includes/cars.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+  return $item;
+}
+
+/**
+ * Implement hook_views_api
+ * @return array
+ */
+function cars_views_api()
+{
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'cars') . '/includes/views',
+  );
+}
+
+/**
+ * @param $id
+ * @return mixedImplement hook_entity_load
+ * Order_load
+ */
+function cars_load($id)
+{
+  $entity = cars_load_multiple(array($id));
+  return reset($entity);
+}
+
+/**
+ * Implements cook table Load Multiple
+ * @Param $ids = array();
+ */
+function cars_load_multiple($ids)
+{
+  return entity_load('cars', $ids);
+}
+
+/**
+ * Implements cook table Create
+ */
+function cars_create(array $entity)
+{
+  return entity_create('cars', $entity);
+}
+
+/**
+ * Implements cook table Cupdate
+ */
+function cars_save($entity)
+{
+  return entity_save('cars', $entity);
+}
+
+/**
+ * @param $ids
+ * @param $conditions
+ * @return mixed
+ * Implements load cook table with condition
+ */
+function cars_load_multiple_with_conditions($ids, $conditions)
+{
+  return entity_load('cars', $ids, $conditions);
+}
+
+/**
+ * Implements order delete
+ */
+function cars_delete($id)
+{
+  return entity_delete('cars', $id);
+}
+
+/**
+ * Implements hook_permission().
+ */
+function cars_permission()
+{
+  return array(
+    'cars:*:add' => array(
+      'title' => t('Thêm Xe'),
+    ),
+    'cars:*:edit' => array(
+      'title' => t('Cập nhật Xe'),
+    ),
+    'cars:*:delete' => array(
+      'title' => t('Xóa Xe'),
+    ),
+    'cars:*:manager' => array(
+      'title' => t('Quản lí xe'),
+    ),
+  );
+}
+
+/**
+ * Implement check exit cook table
+ */
+function cars_get_cars($field, $value)
+{
+  $query = db_select('cars', 'd');
+  $query->fields('d');
+  $query->condition($field, $value, '=');
+  $result = $query->execute()->fetchAll();
+  if ($result) {
+    return $result;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * Implement hook_page_alter
+ */
+function cars_page_alter(&$page)
+{
+  if ($_GET['q'] == 'cars/manager') {
+    $page['content']['add_cars'] = array(
+      '#weight' => 100,
+      '#markup' => ' <ul class="action-links"><li><a href="/cars/add">Thêm Xe</a></li></ul>',
+    );
+  }
+
+}
+
+/**
+ * Get cars list
+ */
+function cars_get_list()
+{
+  $query = db_select('cars', 'd');
+  $query->fields('d');
+  $query->condition('status', 1, '=');
+  $result = $query->execute()->fetchAll();
+  $data = array();
+  $data[''] = t('Chọn xe');
+  if ($result) {
+    foreach ($result as $car) {
+      $data[$car->id] = $car->car_name . ' - ' . $car->car_number;
+    }
+  }
+  return $data;
+}
+
+/**
+ * Get car name
+ */
+function car_get_name($id)
+{
+  if ($id) {
+    $car = cars_load($id);
+    return $car->car_name;
+  }
+}
+
+/**
+ * Get car name
+ */
+function car_get_number($id)
+{
+  if ($id) {
+    $car = cars_load($id);
+    return $car->car_number;
+  }
+
+}
+
+/**
+ * Get all car number
+ */
+
+function cars_get_cars_number()
+{
+  $number = array();
+  $number[''] = t('Chọn số xe');
+  $query = db_select('cars', 'd');
+  $query->fields('d');
+  $query->condition('status', 1, '=');
+  $result = $query->execute()->fetchAll();
+  if ($result) {
+    foreach ($result as $car) {
+      $number[$car->car_number] = $car->car_number;
+    }
+  }
+  return $number;
+}

@@ -1,0 +1,152 @@
+; Packaging information for car_movation
+name = "Car Movation"
+description = "Quản lý và điều động xe"
+exclusive = "1"
+core = "7.x"
+; ----------
+; Dependencies
+; ----------
+; Administration
+dependencies[] = admin_menu
+dependencies[] = admin_menu_toolbar
+dependencies[] = module_filter
+; Chaos tool suite
+dependencies[] = ctools
+dependencies[] = page_manager
+; Context
+dependencies[] = context
+dependencies[] = context_ui
+; Core
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = php
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = user
+; Date/Time
+dependencies[] = date
+dependencies[] = date_all_day
+dependencies[] = date_api
+dependencies[] = date_popup
+dependencies[] = date_tools
+dependencies[] = date_views
+; Development
+dependencies[] = devel
+dependencies[] = profiler_builder
+; Fields
+dependencies[] = entityreference
+; Other
+dependencies[] = backup_migrate
+dependencies[] = entity
+dependencies[] = entity_token
+dependencies[] = libraries
+dependencies[] = menu_block
+; Panels
+dependencies[] = panels
+dependencies[] = panels_mini
+; User interface
+dependencies[] = jquery_update
+; Variable
+dependencies[] = variable
+dependencies[] = variable_realm
+dependencies[] = variable_store
+dependencies[] = variable_views
+; Views
+dependencies[] = views
+dependencies[] = views_bulk_operations
+dependencies[] = views_data_export
+dependencies[] = views_php
+dependencies[] = views_ui
+; booking
+dependencies[] = booking
+; car_setting
+dependencies[] = car_setting
+; cars
+dependencies[] = cars
+dependencies[] = company
+; Features
+dependencies[] = features
+;dependencies[] = booking_features
+
+; ----------
+; Variables
+; ----------
+variables[admin_theme] = 'adminimal'
+variables[anonymous] = 'Anonymous'
+variables[backup_migrate_copy_destination_id] = 'nodesquirrel'
+variables[backup_migrate_destination_id] = 'download'
+variables[backup_migrate_profile_id] = 'default'
+variables[backup_migrate_source_id] = 'db'
+variables[cache_class_cache_ctools_css] = 'CToolsCssCache'
+variables[context_block_rebuild_needed] = true
+variables[date_api_version] = '7.2'
+variables[date_default_timezone] = 'Asia/Krasnoyarsk'
+variables[date_views_day_format_without_year] = 'l, F j'
+variables[date_views_day_format_with_year] = 'l, F j, Y'
+variables[date_views_month_format_without_year] = 'F'
+variables[date_views_month_format_with_year] = 'F Y'
+variables[date_views_week_format_without_year] = 'F j'
+variables[date_views_week_format_with_year] = 'F j, Y'
+variables[entityreference:base-tables][booking][0] = 'booking'
+variables[entityreference:base-tables][booking][1] = 'id'
+variables[entityreference:base-tables][cars][0] = 'cars'
+variables[entityreference:base-tables][cars][1] = 'id'
+variables[entityreference:base-tables][company][0] = 'company'
+variables[entityreference:base-tables][company][1] = 'id'
+variables[entityreference:base-tables][node][0] = 'node'
+variables[entityreference:base-tables][node][1] = 'nid'
+variables[entityreference:base-tables][file][0] = 'file_managed'
+variables[entityreference:base-tables][file][1] = 'fid'
+variables[entityreference:base-tables][taxonomy_term][0] = 'taxonomy_term_data'
+variables[entityreference:base-tables][taxonomy_term][1] = 'tid'
+variables[entityreference:base-tables][taxonomy_vocabulary][0] = 'taxonomy_vocabulary'
+variables[entityreference:base-tables][taxonomy_vocabulary][1] = 'vid'
+variables[entityreference:base-tables][user][0] = 'users'
+variables[entityreference:base-tables][user][1] = 'uid'
+variables[filter_fallback_format] = 'plain_text'
+variables[jquery_update_compression_type] = 'min'
+variables[jquery_update_jquery_admin_version] = '1.7'
+variables[jquery_update_jquery_cdn] = 'google'
+variables[jquery_update_jquery_version] = '1.7'
+variables[module_filter_recent_modules][profiler_builder] = 1467346038
+variables[module_filter_recent_modules][backup_migrate] = 1467355490
+variables[nodesquirrel_endpoint_urls][0] = 'api.nodesquirrel.com/services/xmlrpc'
+variables[nodesquirrel_schedule] = '604800'
+variables[nodesquirrel_schedule_enabled] = 1
+variables[nodesquirrel_schedule_keep] = -2
+variables[nodesquirrel_schedule_source_id] = 'db'
+variables[nodesquirrel_secret_key] = '90ce16631deac73d498e327fe07c70f2:661dbd29aaad9a3083f233fa2d0ddb5e'
+variables[node_admin_theme] = 1
+variables[node_options_page][0] = 'status'
+variables[site_frontpage] = 'frontpage'
+variables[theme_default] = 'app'
+variables[user_cancel_method] = 'user_cancel_block'
+variables[user_email_verification] = 1
+variables[user_pictures] = 1
+variables[user_picture_dimensions] = '1024x1024'
+variables[user_picture_file_size] = '800'
+variables[user_picture_path] = 'pictures'
+variables[user_picture_style] = 'thumbnail'
+variables[user_register] = '0'
+variables[variable_module_list][variable_realm][0] = 'variable_realm_list_global'
+variables[variable_module_list][variable_realm][1] = 'variable_realm_weight_global'
+

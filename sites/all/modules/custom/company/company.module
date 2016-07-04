@@ -1,0 +1,214 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: admin
+ * Date: 6/8/16
+ * Time: 9:39 PM
+ * To change this template use File | Settings | File Templates.
+ */
+/**
+ * Implement hook_entity
+ */
+
+function company_entity_info()
+{
+  return array(
+    'company' => array(
+      "label" => "Company",
+      "base table" => "company",
+      'controller class' => 'CompanyController',
+      "fieldable" => false,
+      'entity keys' => array(
+        'id' => 'id',
+      ),
+      'views controller class' => 'CompanyViewsController',
+      'view modes' => array(
+        'full' => array(
+          'label' => t('Full content'),
+          'custom settings' => TRUE
+        )
+      )
+    )
+  );
+}
+
+
+/**
+ * Implements hook_menu().
+ * Add menu for order
+ */
+function company_menu()
+{
+  $item = array();
+  $item['company/add'] = array(
+    'title' => t('Thêm công ty'),
+    'access arguments' => array('company:*:add'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('company_add_form', 2),
+    'file' => 'includes/company.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+  $item['company/edit/%company'] = array(
+    'title' => t('Cập nhật công ty'),
+    'access arguments' => array('company:*:edit'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('company_add_form', 2),
+    'file' => 'includes/company.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+
+  $item['company/delete/%company'] = array(
+    'title' => t('Xóa công ty'),
+    'access arguments' => array('company:*:delete'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('company_delete_form', 2),
+    'file' => 'includes/company.page.inc',
+    'type' => MENU_LOCAL_ACTION
+  );
+  return $item;
+}
+
+/**
+ * Implement hook_views_api
+ * @return array
+ */
+function company_views_api()
+{
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'company') . '/includes/views',
+  );
+}
+
+/**
+ * @param $id
+ * @return mixedImplement hook_entity_load
+ * Order_load
+ */
+function company_load($id)
+{
+  $entity = company_load_multiple(array($id));
+  return reset($entity);
+}
+
+/**
+ * Implements cook table Load Multiple
+ * @Param $ids = array();
+ */
+function company_load_multiple($ids)
+{
+  return entity_load('company', $ids);
+}
+
+/**
+ * Implements cook table Create
+ */
+function company_create(array $entity)
+{
+  return entity_create('company', $entity);
+}
+
+/**
+ * Implements cook table Cupdate
+ */
+function company_save($entity)
+{
+  return entity_save('company', $entity);
+}
+
+/**
+ * @param $ids
+ * @param $conditions
+ * @return mixed
+ * Implements load cook table with condition
+ */
+function company_load_multiple_with_conditions($ids, $conditions)
+{
+  return entity_load('company', $ids, $conditions);
+}
+
+/**
+ * Implements order delete
+ */
+function company_delete($id)
+{
+  return entity_delete('company', $id);
+}
+
+/**
+ * Implements hook_permission().
+ */
+function company_permission()
+{
+  return array(
+    'company:*:add' => array(
+      'title' => t('Thêm công ty'),
+    ),
+    'company:*:edit' => array(
+      'title' => t('Cập nhật công ty'),
+    ),
+    'company:*:delete' => array(
+      'title' => t('Xóa công ty'),
+    ),
+    'company:*:manager' => array(
+      'title' => t('Quản lí công ty'),
+    ),
+  );
+}
+
+/**
+ * Implement check exit cook table
+ */
+function company_get_company($field, $value)
+{
+  $query = db_select('company', 'd');
+  $query->fields('d');
+  $query->condition($field, $value, '=');
+  $result = $query->execute()->fetchAll();
+  if ($result) {
+    return $result;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * Implement hook_page_alter
+ */
+function company_page_alter(&$page){
+  if($_GET['q']=='company/manager'){
+    $page['content']['add_company'] = array(
+      '#weight' => 100,
+      '#markup' => ' <ul class="action-links"><li><a href="/company/add">Thêm Công ty</a></li></ul>',
+    );
+  }
+
+}
+
+/**
+ * Get company list
+ */
+/**
+ * Get cars list
+ */
+function company_get_list(){
+  $query = db_select('company', 'd');
+  $query->fields('d');
+  $query->condition('status', 1, '=');
+  $result = $query->execute()->fetchAll();
+  $data = array();
+  $data[''] = t('Chọn công ty');
+  if ($result) {
+    foreach($result as $car){
+      $data[$car->id] = $car->company_name;
+    }
+  }
+  return $data;
+}
+/**
+ * Get comany name
+ */
+function company_get_name($id){
+  $company = company_load($id);
+  return $company->company_name;
+}

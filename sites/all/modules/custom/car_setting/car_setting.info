@@ -1,0 +1,7 @@
+name = System info
+description = Aplication software for billing
+package = car_setting
+core = 7.x
+version = "7.x-0.1-beta"
+project = "App"
+

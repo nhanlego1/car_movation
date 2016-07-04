@@ -1,0 +1,9 @@
+name = Booking system
+description = Aplication software for billing
+package = booking
+core = 7.x
+version = "7.x-0.1-beta"
+project = "App"
+
+files[] = includes/booking.controller.inc
+files[] = includes/booking.views_controller.inc

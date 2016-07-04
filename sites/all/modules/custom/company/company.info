@@ -1,0 +1,9 @@
+name = Company Manager
+description = Aplication software for billing
+package = cars
+core = 7.x
+version = "7.x-0.1-beta"
+project = "App"
+
+files[] = includes/company.controller.inc
+files[] = includes/company.views_controller.inc

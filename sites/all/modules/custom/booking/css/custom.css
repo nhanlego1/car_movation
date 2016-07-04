@@ -1,0 +1,350 @@
+/**add css for application*/
+.loading {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 98;
+    display: none;
+    top: 0;
+    left: 0;
+}
+.loading img{
+    position: absolute;
+    z-index: 999;
+    left: 44%;
+    top: 40%;
+}
+
+.mobile-template-wrapper{
+    display: none;
+}
+td.header-week .label-day-week {
+    background: #375d7c;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 2.5px 0px 4.5px 0px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 500;
+    text-align: center;
+    min-width: 120px;
+}
+#page h2{
+    color: #375d7c;
+    font-size: 2.2em;
+    font-weight: 200;
+    margin-bottom: 25px;
+}
+.app-info h3{
+    color: #375d7c;
+    font-size: 1.5em;
+    font-weight: 200;
+    margin-bottom: 10px;
+}
+.nw-week-next {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+.nw-week-previous {
+    width: 50%;
+    float: left;
+}
+.company {
+    background: #375d7c;
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    padding: 5px;
+    line-height: 28px;
+    height: 38px;
+}
+.row-task, .item-child{
+    position: relative;
+    padding: 5px;
+    background: #e3e3e3;
+    width: 139px;
+    height: 160px;
+}
+.company-code{
+    margin-top: 5px;
+}
+#booking-form-date-filter{
+    margin-bottom: 20px;
+}
+#booking-form-date-filter .form-item-start-date{
+    float: left;
+}
+#booking-form-date-filter .form-item-start-date .description{
+    display: none;
+}
+.date-item {
+    background: #375d7c;
+    color: #ffffff;
+    font-size: 1.2em;
+    line-height: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+    font-weight: 500;
+}
+.date-list{
+    margin-bottom: 5px;
+}
+.action-links a{
+    display: inline-block;
+    border: none;
+    background: #375d7c;
+    color: #fff!important;
+    padding: 6px 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-align: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.container-inline-date .date-padding {
+    float: right;
+}
+ul li{
+    list-style: none;
+}
+.row-task.even, .item-child.even{
+    background: #375d7c;
+    color:#fff;
+    margin-top: 5px;
+}
+.row-task.even .company, .item-child.even .company {
+    background: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    padding: 5px;
+    line-height: 28px;
+    height: 38px;
+}
+label{
+    width: 100px;
+}
+.action-links a:hover, .action-links a:focus {
+    background: #274359;
+    color: #fff;
+}
+.code {
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 35px;
+}
+.user-account{
+    text-align: right;
+    margin-top: 30px;
+}
+.row-task h4 {
+    font-weight: bold;
+    font-size: 13px;
+    height: 35px;
+}
+.driver,.guide{
+    font-size: 11px;
+}
+td.header-week{
+    width: 139px;
+}
+/**
+* menu style
+*/
+.region-header .menu-name-main-menu ul.menu {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.region-header .menu-name-main-menu ul.menu li {
+    list-style: none;
+    color: #ffffff;
+    font-size: 1.2em;
+    line-height: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+    font-weight: 500;
+}
+.region-header .menu-name-main-menu ul.menu li.first {
+    border-top: 1px solid #dddddd;
+}
+.region-header h2{
+    font-size: 2.2em;
+    color: #fff!important;
+    font-weight: bold;
+}
+h2.site-name{
+    margin-top: 15px;
+}
+#user-login-form .form-item-name label{
+    display: inline-block;
+}
+#user-login-form .form-item-name input#edit-name, #user-login-form #edit-pass{
+    width: auto;
+}
+#navigation .region-menu ul.menu{
+    width: 30%;
+}
+#navigation .region-menu ul.menu li{
+    list-style: none;
+    font-size: 1em;
+    line-height: 17px;
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+    font-weight: 500;
+    background: #375d7c;
+    color: #fff;
+}
+#navigation .region-menu ul.menu li a{
+    color:#ffffff;
+}
+#navigation{
+    position: relative;
+}
+#navigation .region-menu ul.menu{
+ position: absolute;
+    right: 55px;
+    top: -11px;
+    z-index: 100;
+    display: none;
+}
+.cancel-link{
+    width: 100px;
+    float: left;
+}
+a#edit-cancel{
+    margin-left: 0px;
+}
+a.action, a.action-links {
+    display: inline-block;
+    border: none;
+    background: #375d7c;
+    color: #fff !important;
+    padding: 6px 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-align: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.menu-mobile {
+    text-align: right;
+    margin-top: 0px;
+   display: none;
+
+}
+.menu-mobile a{
+    color:#fff;
+    padding: 10px;
+    background: #274359;
+}
+.menu-mobile a:hover{
+    color:#fff;
+}
+#navigation .region-menu ul li.first{
+    border-top: 1px solid #dddddd;
+}
+#header{
+    display: block;
+}
+@media only screen and (max-width: 1024px)  {
+    .menu-mobile {
+        display: block;
+    }
+    .user-account {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    #header{
+        display: none;
+        width: 0px!important;
+    }
+    #navigation .region-menu ul.menu{
+        width: 80%;
+    }
+    #page{
+        margin-left: 15px!important;
+    }
+}
+@media only screen and (max-width: 1000px)  {
+    .menu-mobile {
+        display: block;
+    }
+    .user-account {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    #header{
+        display: none;
+        width: 0px!important;
+    }
+    #navigation .region-menu ul.menu{
+        width: 80%;
+    }
+    #page{
+        margin-left: 15px!important;
+    }
+    .mobile-template-wrapper{
+        display: block!important;
+    }
+    .schedule-table{
+        display: none;
+    }
+    #page h2 {
+        font-size: 1.7em;
+    }
+    .form-text, .form-textarea {
+        background-color: #fbfbfb;
+        border: 1px solid #dcdcdc;
+        border-radius: 3px;
+        padding: 5px 10px;
+        width: 100%;
+        display: block;
+    }
+    label {
+        width: 100%;
+    }
+    .container-inline-date .date-padding {
+        float: left;
+    }
+    table thead th {
+        padding-bottom: 20px;
+        padding-top: 20px;
+        font-size: 8px;
+    }
+    table td {
+        color: #333;
+        font-size: 10px;
+    }
+
+
+}
+@media only screen and (max-width: 756px)  {
+    table, thead, tbody, td, tr {
+        display: block;
+    }
+    th {
+        display: none;
+    }
+    table th, table th.checkbox, table td{
+        padding: 0px!important;
+    }
+}
+@media print
+{
+
+}
