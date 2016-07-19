@@ -91,9 +91,28 @@
             $(".form-item-booking-from-date input").each(function(){
                 $(this).val($(this).attr('data'));
             });
-            $("form-item-booking-to input").each(function(){
+            $(".form-item-booking-to input").each(function(){
                 $(this).val($(this).attr('data'));
             });
+			$(".page-booking-frontpage .form-item-start-date-date input").each(function(){
+				var start_date = getQueryVariable("start_date");
+				$(this).val(start_date);
+				
+			});
+			
+			
+
+				function getQueryVariable(variable) {
+				  var query = window.location.search.substring(1);
+				  var vars = query.split("&");
+				  for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if (pair[0] == variable) {
+					  return pair[1];
+					}
+				  } 
+				  
+				}
 
         }
     };

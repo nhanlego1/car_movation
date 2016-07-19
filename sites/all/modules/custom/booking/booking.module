@@ -35,9 +35,10 @@ function booking_entity_info()
 /**
  * Implement hook init
  */
-function booking_init(){
+function booking_init()
+{
   $module_path = drupal_get_path('module', 'booking');
-  drupal_add_js($module_path . '/js/booking.js', array('scope'=>'footer'));
+  drupal_add_js($module_path . '/js/booking.js', array('scope' => 'footer'));
   drupal_add_css($module_path . '/css/custom.css');
 }
 
@@ -100,22 +101,23 @@ function booking_menu()
  * Implement hook_theme()
  * theme for app
  */
-function booking_theme(){
+function booking_theme()
+{
   $module_path = drupal_get_path('module', 'booking');
   return array(
     'booking_table' => array(
       'template' => 'booking-table-dashboard',
-      'path' => $module_path.'/theme',
+      'path' => $module_path . '/theme',
     ),
     'booking_week' => array(
       'template' => 'booking-week',
       'arguments' => array('data' => NULL),
-      'path' => $module_path.'/theme',
+      'path' => $module_path . '/theme',
     ),
     'booking_week_general' => array(
       'template' => 'booking-week-general',
       'arguments' => array('data' => NULL),
-      'path' => $module_path.'/theme',
+      'path' => $module_path . '/theme',
     ),
   );
 }
@@ -221,8 +223,9 @@ function booking_get_booking($field, $value)
 /**
  * Implement hook_page_alter
  */
-function booking_page_alter(&$page){
-  if($_GET['q']=='booking/manager'){
+function booking_page_alter(&$page)
+{
+  if ($_GET['q'] == 'booking/manager') {
     $page['content']['add_booking'] = array(
       '#weight' => 100,
       '#markup' => ' <ul class="action-links"><li><a href="/booking/add">Thêm booking</a></li></ul>',
@@ -235,7 +238,8 @@ function booking_page_alter(&$page){
  * Implement hook_block_info
  * Booking table
  */
-function booking_block_info() {
+function booking_block_info()
+{
   $blocks['booking_table'] = array(
     'info' => t('Booking dashboard'),
   );
@@ -252,7 +256,8 @@ function booking_block_info() {
  * Implement hook_block_view
  * show booking dashboard
  */
-function booking_block_view($delta = '') {
+function booking_block_view($delta = '')
+{
   $block = array();
   switch ($delta) {
     case 'booking_table':
@@ -263,7 +268,7 @@ function booking_block_view($delta = '') {
       $current_week = $result['current_week'];
       $markup = (empty($data)) ? 'No data display' : theme('booking_week', array('data' => $data));
       $block['subject'] = t('Booking dashboard');
-      $block['content'] = theme('booking_week_general', array('current_week'=>$current_week,'data' => $markup, 'page' => 0, 'total_page' => $total_page));
+      $block['content'] = theme('booking_week_general', array('current_week' => $current_week, 'data' => $markup, 'page' => 0, 'total_page' => $total_page));
       break;
     case 'app_user':
       $block['content'] = booking_user_account();
@@ -274,47 +279,54 @@ function booking_block_view($delta = '') {
   }
   return $block;
 }
+
 /**
  * User account
  */
-function booking_user_account(){
+function booking_user_account()
+{
   global $user;
   $output = '';
-  if($user->uid > 0){
-    $output .= '<div class="user-account">Welcome '.$user->name.' | <a href="/user/logout">Đăng xuất</a> | <a href="/user/'.$user->uid.'/edit">Thay đổi password</a></div>';
+  if ($user->uid > 0) {
+    $output .= '<div class="user-account">Welcome ' . $user->name . ' | <a href="/user/logout">Đăng xuất</a> | <a href="/user/' . $user->uid . '/edit">Thay đổi password</a></div>';
   }
 
   return $output;
 }
+
 /**
  * Implement hook_show_dashboard_table
  */
-function booking_dashboard_table(){
+function booking_dashboard_table()
+{
 
-  return theme('booking_table',array('weeks'=>booking_show_week()));
+  return theme('booking_table', array('weeks' => booking_show_week()));
 }
 
 /**
  * Get day in week
  */
-function booking_get_day_in_week($date = null){
+function booking_get_day_in_week($date = null)
+{
   $w = date("N", $date);
-  $days = array(1=>'Thứ hai', 2=>'Thứ ba', 3=>'Thứ tư', 4=>'Thứ năm',5=>'Thứ sáu',6=>'Thứ bảy', 7=>'Chủ nhật');
+  $days = array(1 => 'Thứ hai', 2 => 'Thứ ba', 3 => 'Thứ tư', 4 => 'Thứ năm', 5 => 'Thứ sáu', 6 => 'Thứ bảy', 7 => 'Chủ nhật');
   return $days[$w];
 }
+
 /**
  * Get all booking by date
  */
-function booking_get_booking_by_date($date){
-  $query = db_select('booking','b');
+function booking_get_booking_by_date($date)
+{
+  $query = db_select('booking', 'b');
   $query->fields('b');
-  $query->condition('booking_from',$date,'>=');
-  $query->condition('booking_to',$date,'<=');
-  $query->condition('status',1,'=');
+  $query->condition('booking_from', $date, '>=');
+  $query->condition('booking_to', $date, '<=');
+  $query->condition('status', 1, '=');
   $result = $query->execute()->fetchAll();
   $book = array();
-  if($result){
-    foreach($result as $booking){
+  if ($result) {
+    foreach ($result as $booking) {
       $book[$booking->id] = $booking;
     }
   }
@@ -324,60 +336,63 @@ function booking_get_booking_by_date($date){
 /**
  * Get all booking
  */
-function booking_get_all_booking_by_date(){
+function booking_get_all_booking_by_date()
+{
   global $user;
-
-  if(in_array('driver',$user->roles)){
-    $query = db_select('booking','b');
-    $query->join('cars','c','b.cars_id = c.id');
-    $query->fields('b');
-    $query->condition('c.car_number',$user->name,'=');
-    $query->condition('b.status',1,'=');
-    $result = $query->execute()->fetchAll();
-  }else{
-    $query = db_select('booking','b');
-    $query->fields('b');
-    $query->condition('status',1,'=');
-    // $query->condition('booking_long',0,'=');
-    $result = $query->execute()->fetchAll();
-  }
-
   $book = array();
-  if($result){
-    foreach($result as $booking){
-      $book[$booking->id] = $booking;
-    }
-  }
+ if($user->uid > 0){
+   if (in_array('admin', $user->roles) || in_array('administrator', $user->roles) || in_array('editor', $user->roles)) {
+     $query = db_select('booking', 'b');
+     $query->fields('b');
+     $query->condition('status', 1, '=');
+     $query->orderBy('created', 'ASC');
+   } else {
+     $query = db_select('booking', 'b');
+     $query->join('cars', 'c', 'b.cars_id = c.id');
+     $query->fields('b');
+     $query->condition('c.car_number', $user->name, '=');
+     $query->condition('b.status', 1, '=');
+     $query->orderBy('created', 'ASC');
+   }
+   $result = $query->execute()->fetchAll();
+   if ($result) {
+     foreach ($result as $booking) {
+       $book[$booking->id] = $booking;
+     }
+   }
+ }
+
   return $book;
 }
+
 /**
  * Implement show week
  */
-function booking_show_week(){
-  $days = array(1=>'Thứ hai', 2=>'Thứ ba', 3=>'Thứ tư', 4=>'Thứ năm',5=>'Thứ sáu',6=>'Thứ bảy', 7=>'Chủ nhật');
+function booking_show_week()
+{
+  $days = array(1 => 'Thứ hai', 2 => 'Thứ ba', 3 => 'Thứ tư', 4 => 'Thứ năm', 5 => 'Thứ sáu', 6 => 'Thứ bảy', 7 => 'Chủ nhật');
   $week = array();
-  foreach($days as $key=> $day){
-    $week[$key]=$day;
+  foreach ($days as $key => $day) {
+    $week[$key] = $day;
   }
   return $week;
 }
 
 
-
 /**
-* Init data
-* @return mixed|null
-*/
-function booking_week_data_init() {
+ * Init data
+ * @return mixed|null
+ */
+function booking_week_data_init()
+{
   //$result = module_invoke('nw_schedule', 'week_data');
   $result = booking_get_all_booking_by_date();
 
-  if(empty($result)) {
+  if (empty($result)) {
     return NULL;
   }
 
-  usort($result, function($item_1, $item_2)
-  {
+  usort($result, function ($item_1, $item_2) {
     return $item_1->booking_from > $item_2->booking_from;
   });
 
@@ -386,11 +401,11 @@ function booking_week_data_init() {
 
   $week_start_date = $min_date;
 
-  if($day_in_week == 7) {
+  if ($day_in_week == 7) {
     $week_start_date = strtotime('-6 day', $min_date);
-  } else if($day_in_week > 1 & $day_in_week < 7) {
+  } else if ($day_in_week > 1 & $day_in_week < 7) {
     $day_in_week -= 1;
-    $week_start_date = strtotime('- '. $day_in_week .' day', $min_date);
+    $week_start_date = strtotime('- ' . $day_in_week . ' day', $min_date);
   }
 
   $max_date = end($result);
@@ -398,45 +413,45 @@ function booking_week_data_init() {
 
   $day_in_week = date('N', $max_date);
   $distance_last_day = 7 - $day_in_week;
-  $week_end_date = ($day_in_week == 7) ? $max_date : strtotime('+ '. $distance_last_day .' day', $max_date);
+  $week_end_date = ($day_in_week == 7) ? $max_date : strtotime('+ ' . $distance_last_day . ' day', $max_date);
 
   $index = 1;
   $weeks = array();
   $current_week = 0;
   $flag = FALSE;
-  if(isset($_GET['start_date']) && !empty($_GET['start_date'])){
+  if (isset($_GET['start_date']) && !empty($_GET['start_date'])) {
     $current_time = $_GET['start_date'];
-  }else{
+  } else {
     $current_time = date('Y-m-d');
   }
 
 
-  while($week_start_date <= $week_end_date) {
+  while ($week_start_date <= $week_end_date) {
     $format_date = date('Y-m-d', $week_start_date);
     $format_date_list = array();
 
-    foreach($result as $item) {
+    foreach ($result as $item) {
       $format_date_item = date('Y-m-d', $item->booking_from);
 
-      if($format_date === $format_date_item) {
+      if ($format_date === $format_date_item) {
         $format_date_list[] = $item;
       }
     }
 
     $week[$format_date] = $format_date_list;
 
-    if($current_time === $format_date) {
+    if ($current_time === $format_date) {
       $flag = TRUE;
     }
 
-    if($index == 7) {
+    if ($index == 7) {
       $weeks[] = $week;
       $week_start_date = strtotime('+1 day', $week_start_date);
 
       $week = array();
       $index = 1;
 
-      if($flag) {
+      if ($flag) {
         $flag = FALSE;
         $current_week = count($weeks) - 1;
       }
@@ -453,17 +468,18 @@ function booking_week_data_init() {
 
 }
 
-function booking_week_next_get($page) {
+function booking_week_next_get($page)
+{
   $result = array('status' => 200, 'data' => NULL);
 
-  if(!is_numeric($page) || $page < 0) {
+  if (!is_numeric($page) || $page < 0) {
     drupal_json_output($result);
     exit;
   }
 
   $data = cache_get(BOOKING_WEEK_DATA_CACHE);
 
-  if(empty($data)) {
+  if (empty($data)) {
     drupal_json_output($result);
     exit;
   }
@@ -471,7 +487,7 @@ function booking_week_next_get($page) {
 
   $data = $data->data;
 
-  if($page > count($data)) {
+  if ($page > count($data)) {
     drupal_json_output($result);
     exit;
   }
@@ -487,14 +503,15 @@ function booking_week_next_get($page) {
  * Implement booking dashboard
  */
 
-function booking_dashboard(){
+function booking_dashboard()
+{
   $result = booking_week_data_init();
   $data = $result['first_page'];
   $total_page = $result['total'];
   $current_week = $result['current_week'];
 
   $markup = (empty($data)) ? 'No data display' : theme('booking_week', array('data' => $data));
-  $content = theme('booking_week_general', array('current_week'=>$current_week,'data' => $markup, 'page' => 0, 'total_page' => $total_page));
+  $content = theme('booking_week_general', array('current_week' => $current_week, 'data' => $markup, 'page' => 0, 'total_page' => $total_page));
 
   return $content;
 }
@@ -502,21 +519,23 @@ function booking_dashboard(){
 /**
  * Function app info
  */
-function booking_app_info(){
+function booking_app_info()
+{
   $output = '';
-  $output .='<div class="app-info">';
-  $output .='<h3>'.variable_get('name').'</h3>';
-  $output .='<p>Địa chỉ: '.variable_get('site_address').'</p>';
-  $output .='<p>Email: '.variable_get('site_email').'</p>';
-  $output .='<p>Điện thoại: '.variable_get('site_phone').'</p>';
-  $output .='</div>';
+  $output .= '<div class="app-info">';
+  $output .= '<h3>' . variable_get('name') . '</h3>';
+  $output .= '<p>Địa chỉ: ' . variable_get('site_address') . '</p>';
+  $output .= '<p>Email: ' . variable_get('site_email') . '</p>';
+  $output .= '<p>Điện thoại: ' . variable_get('site_phone') . '</p>';
+  $output .= '</div>';
   return $output;
 }
 
 /**
  * Implement hook_form
  */
-function booking_form_date_filter($form, &$form_state){
+function booking_form_date_filter($form, &$form_state)
+{
   $form['start_date'] = array(
     '#type' => 'date_popup', // types 'date_popup', 'date_text' and 'date_timezone' are also supported. See .inc file.
     '#title' => t('Tìm theo ngày'),
@@ -525,9 +544,14 @@ function booking_form_date_filter($form, &$form_state){
     '#date_increment' => 15, // Optional, used by the date_select and date_popup elements to increment minutes and seconds.
     '#date_year_range' => '-10:+10', // Optional, used to set the year range (back 3 years and forward 3 years is the default).
   );
+  $form['tour_code'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Tour code'),
+    '#default_value' => isset($_GET['tour_code']) ? $_GET['tour_code'] : ''
+  );
   $form['submit'] = array(
-    '#type'=>'submit',
-    '#value'=>'Tìm'
+    '#type' => 'submit',
+    '#value' => 'Tìm'
   );
   return $form;
 }
@@ -535,6 +559,26 @@ function booking_form_date_filter($form, &$form_state){
 /**
  * Hook_form_submit
  */
-function booking_form_date_filter_submit($form, &$form_state){
-  $_GET['start_date'] = $form_state['values']['start_date'];
+function booking_form_date_filter_submit($form, &$form_state)
+{
+  if (!empty($form_state['values']['start_date'])) {
+    $_GET['start_date'] = $form_state['values']['start_date'];
+  } else {
+    unset($_GET['start_date']);
+  }
+  if (!empty($form_state['values']['tour_code'])) {
+    $query = db_select('booking', 'b');
+    $query->fields('b');
+    $query->condition('tour_code', '%' . db_like($form_state['values']['tour_code']) . '%', 'like');
+    $query->condition('status', 1, '=');
+    $query->orderBy('created', 'ASC');
+    $result = $query->execute()->fetchObject();
+    if ($result) {
+      $_GET['start_date'] = date('Y-m-d', $result->booking_from);
+      $_GET['tour_code'] = $form_state['values']['tour_code'];
+    }
+  } else {
+    unset($_GET['tour_code']);
+  }
+
 }
