@@ -287,8 +287,13 @@ function booking_user_account()
 {
   global $user;
   $output = '';
+  $password = '';
+
   if ($user->uid > 0) {
-    $output .= '<div class="user-account">Welcome ' . $user->name . ' | <a href="/user/logout">Đăng xuất</a> | <a href="/user/' . $user->uid . '/edit">Thay đổi password</a></div>';
+    if (in_array('admin', $user->roles) || in_array('administrator', $user->roles) || in_array('editor', $user->roles)) {
+      $password = '| <a href="/user/' . $user->uid . '/edit">Thay đổi password</a></div>';
+    }
+    $output .= '<div class="user-account">Welcome ' . $user->name . ' | <a href="/user/logout">Đăng xuất</a> '.$password;
   }
 
   return $output;
